@@ -1,9 +1,20 @@
-
-
 const Gamecanvas = document.getElementById("Gamecanvas");
-
 const ctx = Gamecanvas.getContext('2d');
 let ChangingDirection = false;
+let snake = [
+    { x: 150, y: 150 },
+    { x: 140, y: 150 },
+    { x: 130, y: 150 },
+    { x: 120, y: 150 },
+    { x: 110, y: 150 },
+]
+// food`s Location
+let foodx;
+let foody;
+// snake Path Direction
+let dx = 10;
+let dy = 0;
+let score = 0;
 
 document.addEventListener('keydown', changeDirection);
 
@@ -39,22 +50,12 @@ function changeDirection(event) {
 }
 
 
-let snake = [
-    { x: 150, y: 150 },
-    { x: 140, y: 150 },
-    { x: 130, y: 150 },
-    { x: 120, y: 150 },
-    { x: 110, y: 150 },
-]
 
-let foodx;
-let foody;
-let dx = 10;
-let dy = 0;
-let score = 0;
 
 
 function main() {
+    if (didGameEnd()) return;
+
     setTimeout(() => {
         ChangingDirection = false;
         clearCanvas();
@@ -64,6 +65,20 @@ function main() {
 
         main();
     }, 100)
+}
+
+function didGameEnd() {
+
+    for (let i = 1; i < snake.length; i++) {
+        if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) return true;
+        1
+    }
+
+    const hitLeftWall = snake[0].x < 0;
+    const hitRightWall = snake[0].y > Gamecanvas.width - 10;
+    const hitTopWall = snake[0].y < 0;
+    const hitBottomWall = snake[0].y > Gamecanvas.height - 10;
+    return hitBottomWall || hitLeftWall || hitRightWall || hitTopWall;
 }
 
 let clearCanvas = () => {
