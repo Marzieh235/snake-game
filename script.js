@@ -51,6 +51,7 @@ let foodx;
 let foody;
 let dx = 10;
 let dy = 0;
+let score = 0;
 
 
 function main() {
@@ -90,7 +91,13 @@ let advanceSnake = () => {
     const head = { x: snake[0].x + dx, y: snake[0].y + dy }
 
     snake.unshift(head);
-    snake.pop();
+    if (head.x == foodx && head.y == foody) {
+        score += 10;
+        document.getElementById('score').innerHTML = score;
+        createfood();
+    } else {
+        snake.pop();
+    }
 }
 
 let DrawSnake = () => snake.forEach(DrawSnakePart);
